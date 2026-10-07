@@ -1,0 +1,45 @@
+{
+  "project_hints": {
+    "description": "Charola AISI 304 500x300x100 esquinas soldadas acabado #4",
+    "product_family": "charola",
+    "quantity": {"value": 20, "source_status": "explicit", "confidence": 1.0, "source_reference": {"excerpt": "cotizar 20 piezas"}}
+  },
+  "customer_requirements": ["Charola AISI 304 de 500 x 300 x 100, con esquinas soldadas y acabado #4."],
+  "components": [{
+    "component_id": "C1", "description": "Charola 500x300x100",
+    "quantity_per_parent": {"value": 1, "source_status": "derived", "confidence": 1.0, "source_reference": {"note": "pieza única"}},
+    "make_or_buy": "MAKE",
+    "material": {
+      "grade": {"value": "AISI 304", "raw_value": "AISI 304", "source_status": "explicit", "confidence": 1.0, "source_reference": {"excerpt": "Charola AISI 304"}},
+      "form": {"value": "sheet", "source_status": "inferred", "confidence": 0.9},
+      "gauge": {"value": "16", "source_status": "explicit", "confidence": 1.0, "source_reference": {"excerpt": "Lámina calibre 16"}},
+      "thickness": {"value": 1.5, "unit": "mm", "source_status": "derived", "confidence": 0.95, "source_reference": {"note": "equivalencia calibre inox"}}
+    },
+    "geometry": {
+      "bounding_box": {
+        "length": {"value": 500, "unit": "mm", "source_status": "explicit", "confidence": 1.0, "source_reference": {"excerpt": "500 x 300 x 100"}},
+        "width": {"value": 300, "unit": "mm", "source_status": "explicit", "confidence": 1.0, "source_reference": {"excerpt": "500 x 300 x 100"}},
+        "height": {"value": 100, "unit": "mm", "source_status": "explicit", "confidence": 1.0, "source_reference": {"excerpt": "500 x 300 x 100"}}},
+      "blank_length": {"value": 700, "unit": "mm", "source_status": "derived", "confidence": 0.9, "source_reference": {"note": "500+2×100"}},
+      "blank_width": {"value": 500, "unit": "mm", "source_status": "derived", "confidence": 0.9, "source_reference": {"note": "300+2×100"}}
+    },
+    "processes": [
+      {"process_id": "P1-LAS", "process_type": "laser_cutting", "routing_sequence": 10, "source_status": "inferred", "confidence": 0.85,
+       "cut_length": {"value": 2800, "unit": "mm", "source_status": "derived", "confidence": 0.8, "source_reference": {"note": "2×(700+500) + muescas"}},
+       "pierce_count": {"value": 1, "source_status": "inferred", "confidence": 0.8}},
+      {"process_id": "P1-DOB", "process_type": "bending", "routing_sequence": 20, "source_status": "inferred", "confidence": 0.9,
+       "number_of_bends": {"value": 4, "source_status": "inferred", "confidence": 0.9}},
+      {"process_id": "P1-WELD", "process_type": "welding", "routing_sequence": 30, "source_status": "explicit", "confidence": 1.0,
+       "joints": [{"joint_id": "J-ESQ", "process": "GTAW", "joint_type": "corner",
+         "weld_length": {"value": 400, "unit": "mm", "source_status": "derived", "confidence": 0.9, "source_reference": {"note": "4 esquinas × 100 mm"}},
+         "side": {"value": "both_sides", "source_status": "explicit", "confidence": 0.9, "source_reference": {"excerpt": "soldadas por ambos lados"}}}]},
+      {"process_id": "P1-POL", "process_type": "surface_polishing", "routing_sequence": 40, "source_status": "explicit", "confidence": 1.0,
+       "area": {"value": 0.31, "unit": "m2", "source_status": "derived", "confidence": 0.85, "source_reference": {"note": "0.15 fondo + 0.16 paredes"}},
+       "final_finish": {"value": "#4", "source_status": "explicit", "confidence": 1.0, "source_reference": {"excerpt": "acabado #4"}}}
+    ]
+  }],
+  "quality_requirements": [{"item_key": "cert_en10204_3_1", "status": "unknown"}],
+  "uncertainties": [{"uncertainty_id": "U1", "field_path": "components[0].processes[3].sides", "description": "No se indica si el #4 es por una o ambas caras", "cost_impact": "HIGH"}],
+  "review_items": [{"review_id": "AI1", "severity": "HIGH", "category": "surface_polishing", "description": "Caras a pulir no especificadas", "cost_impact": "HIGH", "recommended_action": "Preguntar al cliente", "question": "Confirmar si el acabado #4 se requiere en ambas caras o sólo en la cara interior de la charola."}],
+  "interpretation_confidence": 0.75
+}

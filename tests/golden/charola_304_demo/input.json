@@ -1,0 +1,170 @@
+{
+  "schema_version": "mcj/1.0.0",
+  "project": {
+    "project_id": "DEMO-0001",
+    "internal_reference": "SAMPLE — demo 1 (captura manual)",
+    "customer": {"value": "Cliente Ejemplo S.A.", "source_status": "explicit", "confidence": 1.0},
+    "drawing_number": {"value": "EJ-CH-500", "source_status": "explicit", "confidence": 1.0},
+    "drawing_revision": {"value": "A", "source_status": "explicit", "confidence": 1.0},
+    "description": "Charola AISI 304 500 x 300 x 100 con esquinas soldadas, acabado #4, 2 asas maquinadas 316L y 4 patas niveladoras",
+    "product_family": "charola",
+    "quantity": {"value": 10, "source_status": "explicit", "confidence": 1.0},
+    "destination_country": {"value": "MX", "source_status": "explicit", "confidence": 1.0},
+    "destination_city": {"value": "Guadalajara", "source_status": "explicit", "confidence": 1.0},
+    "currency": {"value": "MXN", "source_status": "explicit", "confidence": 1.0},
+    "export": {"value": false, "source_status": "explicit", "confidence": 1.0},
+    "quote_validity_days": 15,
+    "rush": "normal",
+    "first_time_build": {"value": true, "source_status": "user_confirmed", "confidence": 1.0},
+    "created_by": "demo"
+  },
+  "components": [
+    {
+      "component_id": "ASM",
+      "description": "Ensamble charola con asas y patas",
+      "quantity_per_parent": {"value": 1, "source_status": "explicit", "confidence": 1.0},
+      "make_or_buy": "MAKE",
+      "geometry": {"bounding_box": {
+        "length": {"value": 560, "unit": "mm", "source_status": "explicit", "confidence": 1.0},
+        "width": {"value": 300, "unit": "mm", "source_status": "explicit", "confidence": 1.0},
+        "height": {"value": 160, "unit": "mm", "source_status": "explicit", "confidence": 1.0}}},
+      "processes": [
+        {"process_id": "P-ASM-WELD", "process_type": "welding", "routing_sequence": 10, "joints": [
+          {"joint_id": "J-ASA", "process": "GTAW", "joint_type": "fillet",
+           "weld_length": {"value": 160, "unit": "mm", "source_status": "inferred", "confidence": 0.7,
+                           "source_reference": {"note": "2 asas × 2 extremos × 40 mm perímetro aprox."}},
+           "side": {"value": "one_side", "source_status": "explicit", "confidence": 1.0},
+           "accessibility": {"value": "easy", "source_status": "explicit", "confidence": 1.0},
+           "sanitary": {"value": false, "source_status": "explicit", "confidence": 1.0},
+           "purge_required": {"value": false, "source_status": "explicit", "confidence": 1.0},
+           "position": {"value": "flat", "source_status": "explicit", "confidence": 1.0},
+           "continuity": {"value": "continuous", "source_status": "explicit", "confidence": 1.0},
+           "penetration": {"value": "partial", "source_status": "explicit", "confidence": 1.0}}
+        ]},
+        {"process_id": "P-ASM-PAS", "process_type": "passivation", "routing_sequence": 20,
+         "run_time": {"value": 0.25, "unit": "hr", "source_status": "explicit", "confidence": 1.0}},
+        {"process_id": "P-ASM-INS", "process_type": "inspection", "routing_sequence": 30,
+         "setup_time": {"value": 0.25, "unit": "hr", "source_status": "explicit", "confidence": 1.0},
+         "run_time": {"value": 0.1, "unit": "hr", "source_status": "explicit", "confidence": 1.0}}
+      ]
+    },
+    {
+      "component_id": "C1",
+      "part_number": "EJ-CH-500-01",
+      "description": "Cuerpo charola 500x300x100",
+      "parent_component_id": "ASM",
+      "quantity_per_parent": {"value": 1, "source_status": "explicit", "confidence": 1.0},
+      "make_or_buy": "MAKE",
+      "material": {
+        "grade": {"value": "SS304", "raw_value": "SS304", "source_status": "explicit", "confidence": 1.0,
+                  "source_reference": {"document_id": "DOC-1", "page": 1, "region": "title_block"}},
+        "form": {"value": "sheet", "source_status": "explicit", "confidence": 1.0},
+        "thickness": {"value": 1.5, "unit": "mm", "raw_value": "cal. 16", "source_status": "explicit", "confidence": 1.0}
+      },
+      "geometry": {
+        "bounding_box": {
+          "length": {"value": 500, "unit": "mm", "source_status": "explicit", "confidence": 1.0},
+          "width": {"value": 300, "unit": "mm", "source_status": "explicit", "confidence": 1.0},
+          "height": {"value": 100, "unit": "mm", "source_status": "explicit", "confidence": 1.0}},
+        "blank_length": {"value": 700, "unit": "mm", "source_status": "derived", "confidence": 0.95,
+                         "source_reference": {"note": "500 + 2×100"}},
+        "blank_width": {"value": 500, "unit": "mm", "source_status": "derived", "confidence": 0.95,
+                        "source_reference": {"note": "300 + 2×100"}}
+      },
+      "processes": [
+        {"process_id": "P1-LAS", "process_type": "laser_cutting", "routing_sequence": 10,
+         "cut_length": {"value": 2800, "unit": "mm", "source_status": "derived", "confidence": 0.9},
+         "pierce_count": {"value": 1, "source_status": "inferred", "confidence": 0.8}},
+        {"process_id": "P1-DOB", "process_type": "bending", "routing_sequence": 20,
+         "number_of_bends": {"value": 4, "source_status": "explicit", "confidence": 1.0}, "setup_count": 1},
+        {"process_id": "P1-WELD", "process_type": "welding", "routing_sequence": 30, "joints": [
+          {"joint_id": "J-ESQ", "process": "GTAW", "joint_type": "corner",
+           "weld_length": {"value": 400, "unit": "mm", "source_status": "derived", "confidence": 0.95,
+                           "source_reference": {"note": "4 esquinas × 100 mm"}},
+           "side": {"value": "both_sides", "source_status": "explicit", "confidence": 1.0,
+                    "source_reference": {"document_id": "DOC-1", "page": 1, "region": "DETAIL A"}},
+           "continuity": {"value": "continuous", "source_status": "explicit", "confidence": 1.0},
+           "penetration": {"value": null, "source_status": "unknown", "confidence": 0.0},
+           "purge_required": {"value": false, "source_status": "explicit", "confidence": 1.0},
+           "sanitary": {"value": false, "source_status": "explicit", "confidence": 1.0},
+           "accessibility": {"value": "medium", "source_status": "inferred", "confidence": 0.75},
+           "position": {"value": "flat", "source_status": "explicit", "confidence": 1.0},
+           "post_weld_grinding": {"value": true, "source_status": "explicit", "confidence": 1.0}}
+        ]},
+        {"process_id": "P1-WF", "process_type": "weld_finishing", "routing_sequence": 40, "finishing_kind": "weld_blending",
+         "weld_length": {"value": 400, "unit": "mm", "source_status": "derived", "confidence": 0.95},
+         "sides": {"value": "both_sides", "source_status": "explicit", "confidence": 1.0},
+         "accessibility": {"value": "medium", "source_status": "inferred", "confidence": 0.75}},
+        {"process_id": "P1-POL", "process_type": "surface_polishing", "routing_sequence": 50, "polish_kind": "surface",
+         "area": {"value": 0.31, "unit": "m2", "source_status": "derived", "confidence": 0.95,
+                  "source_reference": {"note": "fondo 0.15 + paredes 0.16 m2"}},
+         "sides": {"value": "one_side", "source_status": "explicit", "confidence": 1.0},
+         "initial_finish": {"value": "2B", "source_status": "explicit", "confidence": 1.0},
+         "final_finish": {"value": "#4", "source_status": "explicit", "confidence": 1.0},
+         "geometry_type": "bent_surface",
+         "accessibility": {"value": "easy", "source_status": "explicit", "confidence": 1.0}}
+      ]
+    },
+    {
+      "component_id": "C2",
+      "part_number": "EJ-CH-500-02",
+      "description": "Asa maquinada Ø12 x 150",
+      "parent_component_id": "ASM",
+      "quantity_per_parent": {"value": 2, "source_status": "explicit", "confidence": 1.0},
+      "make_or_buy": "MAKE",
+      "material": {
+        "grade": {"value": "316L", "raw_value": "316L", "source_status": "explicit", "confidence": 1.0},
+        "form": {"value": "round_bar", "source_status": "explicit", "confidence": 1.0},
+        "outside_diameter": {"value": 12.7, "unit": "mm", "raw_value": "1/2\"", "source_status": "explicit", "confidence": 1.0}
+      },
+      "geometry": {
+        "bounding_box": {
+          "length": {"value": 150, "unit": "mm", "source_status": "explicit", "confidence": 1.0},
+          "width": {"value": 12.7, "unit": "mm", "source_status": "explicit", "confidence": 1.0},
+          "height": {"value": 12.7, "unit": "mm", "source_status": "explicit", "confidence": 1.0}},
+        "cut_length": {"value": 155, "unit": "mm", "source_status": "derived", "confidence": 0.9,
+                       "source_reference": {"note": "150 + 5 mm refrentado"}}
+      },
+      "tolerances": [{"feature": "longitud total", "value": {"value": 0.1, "unit": "mm", "source_status": "explicit", "confidence": 1.0}}],
+      "processes": [
+        {"process_id": "P2-SAW", "process_type": "saw_cutting", "routing_sequence": 10,
+         "setup_time": {"value": 0.1, "unit": "hr", "source_status": "explicit", "confidence": 1.0},
+         "run_time": {"value": 2, "unit": "min", "source_status": "explicit", "confidence": 1.0}},
+        {"process_id": "P2-TOR", "process_type": "machining", "routing_sequence": 20, "machine_type": "cnc_lathe",
+         "setup_time": {"value": 0.5, "unit": "hr", "source_status": "explicit", "confidence": 1.0},
+         "cycle_time": {"value": 4, "unit": "min", "source_status": "explicit", "confidence": 1.0},
+         "number_of_operations": 2}
+      ]
+    },
+    {
+      "component_id": "C3",
+      "description": "Pata niveladora sanitaria M10",
+      "parent_component_id": "ASM",
+      "quantity_per_parent": {"value": 4, "source_status": "explicit", "confidence": 1.0},
+      "make_or_buy": "BUY",
+      "buy": {"manufacturer": "Fabricante Ejemplo", "model": "NIV-M10", "part_number": "NIV-M10-SS",
+              "supplier": "Distribuidor Ejemplo", "currency": "USD", "lead_time_days": 10,
+              "unit_cost": {"value": 6.5, "source_status": "explicit", "confidence": 1.0},
+              "price_date": "2026-09-15", "price_source_ref": "COT-EJ-2001"}
+    }
+  ],
+  "quality_requirements": [
+    {"item_key": "cert_en10204_3_1", "status": "required", "basis": "per_lot"},
+    {"item_key": "dimensional_report", "status": "inferred", "basis": "per_lot"}
+  ],
+  "packaging_requirements": {
+    "packaging_type": {"value": "cardboard", "source_status": "explicit", "confidence": 1.0},
+    "units_per_package": 1,
+    "items": [{"item_key": "plastic_bag", "status": "required", "basis": "per_piece"}]
+  },
+  "logistics": [
+    {"item_key": "freight_local", "status": "required",
+     "cost": {"value": 1200, "source_status": "explicit", "confidence": 1.0}, "currency": "MXN"}
+  ],
+  "engineering": {
+    "engineering_hours": {"value": 2, "unit": "hr", "source_status": "user_confirmed", "confidence": 1.0},
+    "programming_hours": {"value": 0.5, "unit": "hr", "source_status": "user_confirmed", "confidence": 1.0}
+  },
+  "interpretation_quality": {"interpreter": "manual"},
+  "commercial_inputs": {"target_margin_pct": 30, "quantity_breaks": [1, 5, 10, 25]}
+}

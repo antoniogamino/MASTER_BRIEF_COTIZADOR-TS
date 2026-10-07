@@ -1,0 +1,3359 @@
+{
+  "$defs": {
+    "Accessibility": {
+      "enum": [
+        "easy",
+        "medium",
+        "difficult",
+        "very_difficult"
+      ],
+      "title": "Accessibility",
+      "type": "string"
+    },
+    "Assumption": {
+      "additionalProperties": false,
+      "properties": {
+        "assumption_id": {
+          "title": "Assumption Id",
+          "type": "string"
+        },
+        "assumption": {
+          "title": "Assumption",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "field_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field Path"
+        },
+        "cost_impact": {
+          "default": "MEDIUM",
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "title": "Cost Impact",
+          "type": "string"
+        },
+        "risk_impact": {
+          "default": "MEDIUM",
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "title": "Risk Impact",
+          "type": "string"
+        },
+        "approved_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Approved By"
+        },
+        "approved_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Approved At"
+        }
+      },
+      "required": [
+        "assumption_id",
+        "assumption",
+        "reason"
+      ],
+      "title": "Assumption",
+      "type": "object"
+    },
+    "Audit": {
+      "additionalProperties": false,
+      "properties": {
+        "interpretation_version": {
+          "default": 1,
+          "title": "Interpretation Version",
+          "type": "integer"
+        },
+        "overrides": {
+          "items": {
+            "$ref": "#/$defs/Override"
+          },
+          "title": "Overrides",
+          "type": "array"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "title": "Audit",
+      "type": "object"
+    },
+    "Bending": {
+      "additionalProperties": false,
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "const": "bending",
+          "default": "bending",
+          "title": "Process Type",
+          "type": "string"
+        },
+        "number_of_bends": {
+          "$ref": "#/$defs/Tracked_int_"
+        },
+        "setup_count": {
+          "default": 1,
+          "title": "Setup Count",
+          "type": "integer"
+        },
+        "tool_changes": {
+          "default": 0,
+          "title": "Tool Changes",
+          "type": "integer"
+        },
+        "handling_complexity": {
+          "default": "medium",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Handling Complexity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "process_id"
+      ],
+      "title": "Bending",
+      "type": "object"
+    },
+    "BoundingBox": {
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "width": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "height": {
+          "$ref": "#/$defs/Tracked_float_"
+        }
+      },
+      "title": "BoundingBox",
+      "type": "object"
+    },
+    "BuyInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "manufacturer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Manufacturer"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "part_number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Part Number"
+        },
+        "supplier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supplier"
+        },
+        "unit_cost": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Currency"
+        },
+        "moq": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Moq"
+        },
+        "lead_time_days": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lead Time Days"
+        },
+        "price_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Price Date"
+        },
+        "price_source_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Price Source Ref"
+        }
+      },
+      "title": "BuyInfo",
+      "type": "object"
+    },
+    "CommercialInputs": {
+      "additionalProperties": false,
+      "description": "Decisiones comerciales capturadas por humano (no por IA).",
+      "properties": {
+        "target_margin_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Margin Pct"
+        },
+        "proceed_with_assumptions": {
+          "default": false,
+          "title": "Proceed With Assumptions",
+          "type": "boolean"
+        },
+        "proceed_approved_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proceed Approved By"
+        },
+        "quantity_breaks": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Quantity Breaks",
+          "type": "array"
+        }
+      },
+      "title": "CommercialInputs",
+      "type": "object"
+    },
+    "Component": {
+      "additionalProperties": false,
+      "properties": {
+        "component_id": {
+          "title": "Component Id",
+          "type": "string"
+        },
+        "part_number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Part Number"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "parent_component_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Component Id"
+        },
+        "quantity_per_parent": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "make_or_buy": {
+          "$ref": "#/$defs/MakeOrBuy",
+          "default": "UNKNOWN"
+        },
+        "material": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Material"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "geometry": {
+          "$ref": "#/$defs/Geometry"
+        },
+        "processes": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "assembly": "#/$defs/GenericProcess",
+                "bending": "#/$defs/Bending",
+                "cleaning": "#/$defs/GenericProcess",
+                "cnc_machining": "#/$defs/GenericProcess",
+                "drilling": "#/$defs/GenericProcess",
+                "electropolishing": "#/$defs/GenericProcess",
+                "grinding": "#/$defs/GenericProcess",
+                "inspection": "#/$defs/GenericProcess",
+                "laser_cutting": "#/$defs/LaserCutting",
+                "machining": "#/$defs/Machining",
+                "manual_cutting": "#/$defs/GenericProcess",
+                "milling": "#/$defs/GenericProcess",
+                "outsourcing": "#/$defs/Outsourcing",
+                "packaging_labor": "#/$defs/GenericProcess",
+                "passivation": "#/$defs/GenericProcess",
+                "plasma_cutting": "#/$defs/GenericProcess",
+                "rolling": "#/$defs/Rolling",
+                "saw_cutting": "#/$defs/GenericProcess",
+                "surface_polishing": "#/$defs/SurfacePolishing",
+                "tapping": "#/$defs/GenericProcess",
+                "threading": "#/$defs/GenericProcess",
+                "turning": "#/$defs/GenericProcess",
+                "unknown": "#/$defs/GenericProcess",
+                "waterjet": "#/$defs/GenericProcess",
+                "weld_finishing": "#/$defs/WeldFinishing",
+                "welding": "#/$defs/Welding"
+              },
+              "propertyName": "process_type"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/LaserCutting"
+              },
+              {
+                "$ref": "#/$defs/Bending"
+              },
+              {
+                "$ref": "#/$defs/Rolling"
+              },
+              {
+                "$ref": "#/$defs/Welding"
+              },
+              {
+                "$ref": "#/$defs/SurfacePolishing"
+              },
+              {
+                "$ref": "#/$defs/WeldFinishing"
+              },
+              {
+                "$ref": "#/$defs/Machining"
+              },
+              {
+                "$ref": "#/$defs/Outsourcing"
+              },
+              {
+                "$ref": "#/$defs/GenericProcess"
+              }
+            ]
+          },
+          "title": "Processes",
+          "type": "array"
+        },
+        "tolerances": {
+          "items": {
+            "$ref": "#/$defs/Tolerance"
+          },
+          "title": "Tolerances",
+          "type": "array"
+        },
+        "buy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BuyInfo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "deleted": {
+          "default": false,
+          "title": "Deleted",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "component_id",
+        "description"
+      ],
+      "title": "Component",
+      "type": "object"
+    },
+    "Conflict": {
+      "additionalProperties": false,
+      "properties": {
+        "conflict_id": {
+          "title": "Conflict Id",
+          "type": "string"
+        },
+        "field_path": {
+          "title": "Field Path",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Values",
+          "type": "array"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "resolved": {
+          "default": false,
+          "title": "Resolved",
+          "type": "boolean"
+        },
+        "resolution": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolution"
+        },
+        "resolved_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolved By"
+        }
+      },
+      "required": [
+        "conflict_id",
+        "field_path",
+        "values",
+        "description"
+      ],
+      "title": "Conflict",
+      "type": "object"
+    },
+    "Engineering": {
+      "additionalProperties": false,
+      "description": "No asumir cero: unknown genera alerta.",
+      "properties": {
+        "engineering_hours": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "cad_hours": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "programming_hours": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "manufacturing_planning_hours": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "fixtures": {
+          "items": {
+            "$ref": "#/$defs/Fixture"
+          },
+          "title": "Fixtures",
+          "type": "array"
+        }
+      },
+      "title": "Engineering",
+      "type": "object"
+    },
+    "Fixture": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_id": {
+          "title": "Fixture Id",
+          "type": "string"
+        },
+        "fixture_type": {
+          "title": "Fixture Type",
+          "type": "string"
+        },
+        "fixture_cost": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Currency"
+        },
+        "reusable": {
+          "default": false,
+          "title": "Reusable",
+          "type": "boolean"
+        },
+        "amortization_quantity": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Amortization Quantity"
+        }
+      },
+      "required": [
+        "fixture_id",
+        "fixture_type"
+      ],
+      "title": "Fixture",
+      "type": "object"
+    },
+    "GenericProcess": {
+      "additionalProperties": false,
+      "description": "Proceso parametrizado por tiempo: setup (una vez) + run (por pieza) × tarifa del proceso.",
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "enum": [
+            "plasma_cutting",
+            "waterjet",
+            "saw_cutting",
+            "manual_cutting",
+            "drilling",
+            "turning",
+            "milling",
+            "cnc_machining",
+            "threading",
+            "tapping",
+            "grinding",
+            "passivation",
+            "electropolishing",
+            "assembly",
+            "inspection",
+            "cleaning",
+            "packaging_labor",
+            "unknown"
+          ],
+          "title": "Process Type",
+          "type": "string"
+        },
+        "setup_time": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "handling_time": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "inspection_time": {
+          "$ref": "#/$defs/Tracked_float_"
+        }
+      },
+      "required": [
+        "process_id",
+        "process_type"
+      ],
+      "title": "GenericProcess",
+      "type": "object"
+    },
+    "Geometry": {
+      "additionalProperties": false,
+      "description": "Geometría mínima para cálculo. ``blank_*`` = desarrollo plano (lámina/placa).",
+      "properties": {
+        "bounding_box": {
+          "$ref": "#/$defs/BoundingBox"
+        },
+        "blank_length": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "blank_width": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "cut_length": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "surface_area": {
+          "$ref": "#/$defs/Tracked_float_"
+        }
+      },
+      "title": "Geometry",
+      "type": "object"
+    },
+    "Impact": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ],
+      "title": "Impact",
+      "type": "string"
+    },
+    "InterpretationQuality": {
+      "additionalProperties": false,
+      "description": "Separa calidad del documento de confianza de la interpretación (sec. 167).",
+      "properties": {
+        "drawing_quality_score": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Drawing Quality Score"
+        },
+        "interpretation_confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Interpretation Confidence"
+        },
+        "missing_pages": {
+          "default": false,
+          "title": "Missing Pages",
+          "type": "boolean"
+        },
+        "unreadable_notes": {
+          "default": false,
+          "title": "Unreadable Notes",
+          "type": "boolean"
+        },
+        "multiple_revisions": {
+          "default": false,
+          "title": "Multiple Revisions",
+          "type": "boolean"
+        },
+        "unclear_units": {
+          "default": false,
+          "title": "Unclear Units",
+          "type": "boolean"
+        },
+        "interpreter": {
+          "default": "manual",
+          "enum": [
+            "manual",
+            "text",
+            "drawing",
+            "hybrid"
+          ],
+          "title": "Interpreter",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "prompt_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prompt Version"
+        }
+      },
+      "title": "InterpretationQuality",
+      "type": "object"
+    },
+    "LaserCutting": {
+      "additionalProperties": false,
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "const": "laser_cutting",
+          "default": "laser_cutting",
+          "title": "Process Type",
+          "type": "string"
+        },
+        "cut_length": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "pierce_count": {
+          "$ref": "#/$defs/Tracked_int_"
+        },
+        "parts_per_sheet": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parts Per Sheet"
+        }
+      },
+      "required": [
+        "process_id"
+      ],
+      "title": "LaserCutting",
+      "type": "object"
+    },
+    "LogisticsItem": {
+      "additionalProperties": false,
+      "properties": {
+        "item_key": {
+          "title": "Item Key",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/RequirementStatus",
+          "default": "unknown"
+        },
+        "cost": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Currency"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Ref"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "title": "LogisticsItem",
+      "type": "object"
+    },
+    "Machining": {
+      "additionalProperties": false,
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "const": "machining",
+          "default": "machining",
+          "title": "Process Type",
+          "type": "string"
+        },
+        "machine_type": {
+          "default": "cnc_mill",
+          "enum": [
+            "cnc_lathe",
+            "cnc_mill",
+            "manual_lathe",
+            "manual_mill",
+            "drill_press"
+          ],
+          "title": "Machine Type",
+          "type": "string"
+        },
+        "setup_time": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "cycle_time": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "number_of_operations": {
+          "default": 1,
+          "title": "Number Of Operations",
+          "type": "integer"
+        },
+        "stock_size": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stock Size"
+        },
+        "surface_finish": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surface Finish"
+        },
+        "tooling_cost": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "special_fixture": {
+          "default": false,
+          "title": "Special Fixture",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "process_id"
+      ],
+      "title": "Machining",
+      "type": "object"
+    },
+    "MakeOrBuy": {
+      "enum": [
+        "MAKE",
+        "BUY",
+        "UNKNOWN"
+      ],
+      "title": "MakeOrBuy",
+      "type": "string"
+    },
+    "Material": {
+      "additionalProperties": false,
+      "properties": {
+        "grade": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "standard": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "form": {
+          "$ref": "#/$defs/Tracked_MaterialForm_"
+        },
+        "finish": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "thickness": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "gauge": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "outside_diameter": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "inside_diameter": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "wall_thickness": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "schedule": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "net_weight": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "commercial_size": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Commercial Size"
+        },
+        "purchase_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "kg",
+          "title": "Purchase Unit"
+        },
+        "process_scrap_pct": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "sheet_utilization_pct": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "remnant_credit_pct": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "minimum_purchase_quantity_kg": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Minimum Purchase Quantity Kg"
+        }
+      },
+      "title": "Material",
+      "type": "object"
+    },
+    "MaterialForm": {
+      "enum": [
+        "sheet",
+        "plate",
+        "tube",
+        "sanitary_tube",
+        "pipe",
+        "round_bar",
+        "flat_bar",
+        "angle",
+        "channel",
+        "square_tube",
+        "rectangular_tube",
+        "wire",
+        "commercial_component",
+        "other"
+      ],
+      "title": "MaterialForm",
+      "type": "string"
+    },
+    "Outsourcing": {
+      "additionalProperties": false,
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "const": "outsourcing",
+          "default": "outsourcing",
+          "title": "Process Type",
+          "type": "string"
+        },
+        "outsourced_process": {
+          "title": "Outsourced Process",
+          "type": "string"
+        },
+        "supplier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supplier"
+        },
+        "supplier_quote_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supplier Quote Ref"
+        },
+        "cost_per_piece": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "one_time_cost": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Currency"
+        },
+        "quote_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote Date"
+        },
+        "logistics_cost": {
+          "$ref": "#/$defs/Tracked_float_"
+        }
+      },
+      "required": [
+        "process_id",
+        "outsourced_process"
+      ],
+      "title": "Outsourcing",
+      "type": "object"
+    },
+    "Override": {
+      "additionalProperties": false,
+      "properties": {
+        "field_path": {
+          "title": "Field Path",
+          "type": "string"
+        },
+        "original_value": {
+          "additionalProperties": true,
+          "title": "Original Value",
+          "type": "object"
+        },
+        "new_value": {
+          "additionalProperties": true,
+          "title": "New Value",
+          "type": "object"
+        },
+        "changed_by": {
+          "title": "Changed By",
+          "type": "string"
+        },
+        "changed_at": {
+          "format": "date-time",
+          "title": "Changed At",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        }
+      },
+      "required": [
+        "field_path",
+        "original_value",
+        "new_value",
+        "changed_by",
+        "changed_at"
+      ],
+      "title": "Override",
+      "type": "object"
+    },
+    "PackagingItem": {
+      "additionalProperties": false,
+      "properties": {
+        "item_key": {
+          "title": "Item Key",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/RequirementStatus",
+          "default": "unknown"
+        },
+        "basis": {
+          "default": "per_package",
+          "enum": [
+            "per_piece",
+            "per_package",
+            "per_lot"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "quantity": {
+          "default": 1,
+          "title": "Quantity",
+          "type": "number"
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "title": "PackagingItem",
+      "type": "object"
+    },
+    "PackagingRequirements": {
+      "additionalProperties": false,
+      "properties": {
+        "packaging_type": {
+          "$ref": "#/$defs/Tracked_Literal__none____cardboard____wood_crate____pallet____custom____customer_specified___"
+        },
+        "units_per_package": {
+          "default": 1,
+          "title": "Units Per Package",
+          "type": "integer"
+        },
+        "clearance_mm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Clearance Mm"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/PackagingItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "title": "PackagingRequirements",
+      "type": "object"
+    },
+    "Project": {
+      "additionalProperties": false,
+      "properties": {
+        "project_id": {
+          "title": "Project Id",
+          "type": "string"
+        },
+        "internal_reference": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Internal Reference"
+        },
+        "customer": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "customer_part_number": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "drawing_number": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "drawing_revision": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "product_family": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Product Family"
+        },
+        "quantity": {
+          "$ref": "#/$defs/Tracked_int_"
+        },
+        "requested_delivery_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Requested Delivery Date"
+        },
+        "destination_country": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "destination_city": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "currency": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "export": {
+          "$ref": "#/$defs/Tracked_bool_"
+        },
+        "quote_validity_days": {
+          "default": 15,
+          "title": "Quote Validity Days",
+          "type": "integer"
+        },
+        "rush": {
+          "$ref": "#/$defs/Rush",
+          "default": "normal"
+        },
+        "first_time_build": {
+          "$ref": "#/$defs/Tracked_bool_"
+        },
+        "created_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Created At"
+        },
+        "created_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Created By"
+        },
+        "status": {
+          "$ref": "#/$defs/ProjectStatus",
+          "default": "draft"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "title": "Project",
+      "type": "object"
+    },
+    "ProjectStatus": {
+      "enum": [
+        "draft",
+        "interpreting",
+        "requires_review",
+        "costing",
+        "ready_for_approval",
+        "approved",
+        "quoted",
+        "won",
+        "lost",
+        "completed",
+        "archived",
+        "failed_interpretation"
+      ],
+      "title": "ProjectStatus",
+      "type": "string"
+    },
+    "QualityRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "item_key": {
+          "title": "Item Key",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/RequirementStatus",
+          "default": "unknown"
+        },
+        "basis": {
+          "default": "per_lot",
+          "enum": [
+            "per_lot",
+            "per_piece"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "quantity": {
+          "default": 1,
+          "title": "Quantity",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "item_key"
+      ],
+      "title": "QualityRequirement",
+      "type": "object"
+    },
+    "RequirementStatus": {
+      "enum": [
+        "required",
+        "not_required",
+        "unknown",
+        "inferred"
+      ],
+      "title": "RequirementStatus",
+      "type": "string"
+    },
+    "ReviewItem": {
+      "additionalProperties": false,
+      "description": "Alerta de revisión por excepción (sección REQUIRES REVIEW).",
+      "properties": {
+        "review_id": {
+          "title": "Review Id",
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/Severity"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "cost_impact": {
+          "$ref": "#/$defs/Impact"
+        },
+        "recommended_action": {
+          "title": "Recommended Action",
+          "type": "string"
+        },
+        "field_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field Path"
+        },
+        "question": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Question"
+        }
+      },
+      "required": [
+        "review_id",
+        "severity",
+        "category",
+        "description",
+        "cost_impact",
+        "recommended_action"
+      ],
+      "title": "ReviewItem",
+      "type": "object"
+    },
+    "Rolling": {
+      "additionalProperties": false,
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "const": "rolling",
+          "default": "rolling",
+          "title": "Process Type",
+          "type": "string"
+        },
+        "rolled_length": {
+          "$ref": "#/$defs/Tracked_float_"
+        }
+      },
+      "required": [
+        "process_id"
+      ],
+      "title": "Rolling",
+      "type": "object"
+    },
+    "Rush": {
+      "enum": [
+        "normal",
+        "urgent",
+        "expedite"
+      ],
+      "title": "Rush",
+      "type": "string"
+    },
+    "Severity": {
+      "enum": [
+        "INFO",
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "Side": {
+      "enum": [
+        "one_side",
+        "both_sides",
+        "unknown"
+      ],
+      "title": "Side",
+      "type": "string"
+    },
+    "SourceDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "filename": {
+          "title": "Filename",
+          "type": "string"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "checksum_sha256": {
+          "title": "Checksum Sha256",
+          "type": "string"
+        },
+        "upload_date": {
+          "format": "date-time",
+          "title": "Upload Date",
+          "type": "string"
+        },
+        "page_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Count"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Revision"
+        },
+        "source_type": {
+          "$ref": "#/$defs/SourceType"
+        },
+        "sent_to_ai": {
+          "default": false,
+          "title": "Sent To Ai",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "document_id",
+        "filename",
+        "type",
+        "checksum_sha256",
+        "upload_date",
+        "source_type"
+      ],
+      "title": "SourceDocument",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "description": "De dónde salió un dato: documento + página + región (+ extracto).",
+      "properties": {
+        "document_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Id"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Region"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "rule_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rule Ref"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "SourceStatus": {
+      "enum": [
+        "explicit",
+        "inferred",
+        "derived",
+        "defaulted",
+        "unknown",
+        "conflicting",
+        "user_confirmed"
+      ],
+      "title": "SourceStatus",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "drawing",
+        "email",
+        "rfq",
+        "specification",
+        "customer_note",
+        "internal_note",
+        "purchase_order",
+        "supplier_quote"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    },
+    "SurfacePolishing": {
+      "additionalProperties": false,
+      "description": "Pulido de superficie (A, D, E, F de la sec. 37). NO incluye acabado de soldadura.",
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "const": "surface_polishing",
+          "default": "surface_polishing",
+          "title": "Process Type",
+          "type": "string"
+        },
+        "polish_kind": {
+          "default": "surface",
+          "enum": [
+            "surface",
+            "final_finishing",
+            "sanitary",
+            "cosmetic"
+          ],
+          "title": "Polish Kind",
+          "type": "string"
+        },
+        "area": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "sides": {
+          "$ref": "#/$defs/Tracked_Side_"
+        },
+        "initial_finish": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "final_finish": {
+          "$ref": "#/$defs/Tracked_str_"
+        },
+        "geometry_type": {
+          "default": "flat_surface",
+          "enum": [
+            "flat_surface",
+            "bent_surface",
+            "tube",
+            "inside_corner",
+            "outside_corner",
+            "small_cavity",
+            "large_open_surface",
+            "complex_assembly"
+          ],
+          "title": "Geometry Type",
+          "type": "string"
+        },
+        "accessibility": {
+          "$ref": "#/$defs/Tracked_Accessibility_"
+        }
+      },
+      "required": [
+        "process_id"
+      ],
+      "title": "SurfacePolishing",
+      "type": "object"
+    },
+    "Tolerance": {
+      "additionalProperties": false,
+      "properties": {
+        "feature": {
+          "title": "Feature",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "enum": [
+                "standard",
+                "moderate",
+                "tight",
+                "very_tight"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "feature"
+      ],
+      "title": "Tolerance",
+      "type": "object"
+    },
+    "Tracked_Accessibility_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Accessibility"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[Accessibility]",
+      "type": "object"
+    },
+    "Tracked_Literal__continuous____intermittent___": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "continuous",
+                "intermittent"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[Literal['continuous', 'intermittent']]",
+      "type": "object"
+    },
+    "Tracked_Literal__flat____horizontal____vertical____overhead___": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "flat",
+                "horizontal",
+                "vertical",
+                "overhead"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[Literal['flat', 'horizontal', 'vertical', 'overhead']]",
+      "type": "object"
+    },
+    "Tracked_Literal__none____cardboard____wood_crate____pallet____custom____customer_specified___": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "none",
+                "cardboard",
+                "wood_crate",
+                "pallet",
+                "custom",
+                "customer_specified"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[Literal['none', 'cardboard', 'wood_crate', 'pallet', 'custom', 'customer_specified']]",
+      "type": "object"
+    },
+    "Tracked_Literal__partial____full___": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "partial",
+                "full"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[Literal['partial', 'full']]",
+      "type": "object"
+    },
+    "Tracked_MaterialForm_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MaterialForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[MaterialForm]",
+      "type": "object"
+    },
+    "Tracked_Side_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Side"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[Side]",
+      "type": "object"
+    },
+    "Tracked_bool_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[bool]",
+      "type": "object"
+    },
+    "Tracked_float_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[float]",
+      "type": "object"
+    },
+    "Tracked_int_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[int]",
+      "type": "object"
+    },
+    "Tracked_str_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "source_status": {
+          "$ref": "#/$defs/SourceStatus",
+          "default": "unknown"
+        },
+        "confidence": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        }
+      },
+      "title": "Tracked[str]",
+      "type": "object"
+    },
+    "Uncertainty": {
+      "additionalProperties": false,
+      "properties": {
+        "uncertainty_id": {
+          "title": "Uncertainty Id",
+          "type": "string"
+        },
+        "field_path": {
+          "title": "Field Path",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "cost_impact": {
+          "default": "MEDIUM",
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "title": "Cost Impact",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uncertainty_id",
+        "field_path",
+        "description"
+      ],
+      "title": "Uncertainty",
+      "type": "object"
+    },
+    "WeldFinishing": {
+      "additionalProperties": false,
+      "description": "Acabado de soldadura (B, C de la sec. 37): esmerilado / difuminado / al ras.",
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "const": "weld_finishing",
+          "default": "weld_finishing",
+          "title": "Process Type",
+          "type": "string"
+        },
+        "finishing_kind": {
+          "default": "weld_blending",
+          "enum": [
+            "weld_grinding",
+            "weld_blending",
+            "flush"
+          ],
+          "title": "Finishing Kind",
+          "type": "string"
+        },
+        "weld_length": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "weld_size": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "sides": {
+          "$ref": "#/$defs/Tracked_Side_"
+        },
+        "accessibility": {
+          "$ref": "#/$defs/Tracked_Accessibility_"
+        },
+        "ra_requirement_um": {
+          "$ref": "#/$defs/Tracked_float_"
+        }
+      },
+      "required": [
+        "process_id"
+      ],
+      "title": "WeldFinishing",
+      "type": "object"
+    },
+    "WeldJoint": {
+      "additionalProperties": false,
+      "properties": {
+        "joint_id": {
+          "title": "Joint Id",
+          "type": "string"
+        },
+        "process": {
+          "default": "GTAW",
+          "enum": [
+            "GTAW",
+            "GMAW",
+            "other"
+          ],
+          "title": "Process",
+          "type": "string"
+        },
+        "joint_type": {
+          "default": "other",
+          "enum": [
+            "butt",
+            "fillet",
+            "lap",
+            "corner",
+            "other"
+          ],
+          "title": "Joint Type",
+          "type": "string"
+        },
+        "weld_length": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "weld_size": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "side": {
+          "$ref": "#/$defs/Tracked_Side_"
+        },
+        "continuity": {
+          "$ref": "#/$defs/Tracked_Literal__continuous____intermittent___"
+        },
+        "penetration": {
+          "$ref": "#/$defs/Tracked_Literal__partial____full___"
+        },
+        "purge_required": {
+          "$ref": "#/$defs/Tracked_bool_"
+        },
+        "sanitary": {
+          "$ref": "#/$defs/Tracked_bool_"
+        },
+        "accessibility": {
+          "$ref": "#/$defs/Tracked_Accessibility_"
+        },
+        "position": {
+          "$ref": "#/$defs/Tracked_Literal__flat____horizontal____vertical____overhead___"
+        },
+        "post_weld_grinding": {
+          "$ref": "#/$defs/Tracked_bool_"
+        },
+        "post_weld_polishing": {
+          "$ref": "#/$defs/Tracked_bool_"
+        },
+        "visual_requirement": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Visual Requirement"
+        },
+        "surface_finish_requirement": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surface Finish Requirement"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "joint_id"
+      ],
+      "title": "WeldJoint",
+      "type": "object"
+    },
+    "Welding": {
+      "additionalProperties": false,
+      "properties": {
+        "process_id": {
+          "title": "Process Id",
+          "type": "string"
+        },
+        "routing_sequence": {
+          "default": 0,
+          "title": "Routing Sequence",
+          "type": "integer"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "setup_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "run_time_override": {
+          "$ref": "#/$defs/Tracked_float_"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "source_status": {
+          "default": "explicit",
+          "title": "Source Status",
+          "type": "string"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "process_type": {
+          "const": "welding",
+          "default": "welding",
+          "title": "Process Type",
+          "type": "string"
+        },
+        "joints": {
+          "items": {
+            "$ref": "#/$defs/WeldJoint"
+          },
+          "title": "Joints",
+          "type": "array"
+        }
+      },
+      "required": [
+        "process_id"
+      ],
+      "title": "Welding",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Raíz del Manufacturing Cost JSON (sólo la parte de *interpretación*; los resultados viven aparte).",
+  "properties": {
+    "schema_version": {
+      "default": "mcj/1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "project": {
+      "$ref": "#/$defs/Project"
+    },
+    "source_documents": {
+      "items": {
+        "$ref": "#/$defs/SourceDocument"
+      },
+      "title": "Source Documents",
+      "type": "array"
+    },
+    "customer_requirements": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Customer Requirements",
+      "type": "array"
+    },
+    "components": {
+      "items": {
+        "$ref": "#/$defs/Component"
+      },
+      "title": "Components",
+      "type": "array"
+    },
+    "quality_requirements": {
+      "items": {
+        "$ref": "#/$defs/QualityRequirement"
+      },
+      "title": "Quality Requirements",
+      "type": "array"
+    },
+    "packaging_requirements": {
+      "$ref": "#/$defs/PackagingRequirements"
+    },
+    "logistics": {
+      "items": {
+        "$ref": "#/$defs/LogisticsItem"
+      },
+      "title": "Logistics",
+      "type": "array"
+    },
+    "engineering": {
+      "$ref": "#/$defs/Engineering"
+    },
+    "uncertainties": {
+      "items": {
+        "$ref": "#/$defs/Uncertainty"
+      },
+      "title": "Uncertainties",
+      "type": "array"
+    },
+    "conflicts": {
+      "items": {
+        "$ref": "#/$defs/Conflict"
+      },
+      "title": "Conflicts",
+      "type": "array"
+    },
+    "assumptions": {
+      "items": {
+        "$ref": "#/$defs/Assumption"
+      },
+      "title": "Assumptions",
+      "type": "array"
+    },
+    "interpretation_quality": {
+      "$ref": "#/$defs/InterpretationQuality"
+    },
+    "commercial_inputs": {
+      "$ref": "#/$defs/CommercialInputs"
+    },
+    "review_items": {
+      "items": {
+        "$ref": "#/$defs/ReviewItem"
+      },
+      "title": "Review Items",
+      "type": "array"
+    },
+    "audit": {
+      "$ref": "#/$defs/Audit"
+    }
+  },
+  "required": [
+    "project"
+  ],
+  "title": "ManufacturingJob",
+  "type": "object",
+  "$id": "ts-quoter/manufacturing_job/mcj/1.0.0"
+}

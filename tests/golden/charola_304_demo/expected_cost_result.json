@@ -1,0 +1,34 @@
+{
+  "as_of": "2026-10-06",
+  "rule_set_ref": "rules@1.0.0-sample#355fecae587d7cc1",
+  "category_totals": {
+    "bending": "839.28",
+    "buy_component": "4940.00",
+    "engineering": "1625.00",
+    "generic_process": "2007.83",
+    "laser_cutting": "1641.32",
+    "logistics": "1200.00",
+    "machining": "2351.25",
+    "material": "5805.93",
+    "packaging": "910.00",
+    "quality": "1350.00",
+    "surface_polishing": "1194.37",
+    "weld_finishing": "3296.67",
+    "welding": "4853.33",
+    "welding_consumables": "119.62"
+  },
+  "quote": {
+    "status": "RECOMMENDED",
+    "base_manufacturing_cost": "30934.60",
+    "risk_contingency": "2231.54",
+    "total_internal_cost": "42309.59",
+    "calculated_price": "60442.27",
+    "rounded_price": "60400.00"
+  },
+  "risk": {
+    "overall_score": "20.84",
+    "overall_risk": "LOW",
+    "cei": "84.4"
+  },
+  "missing_lines": []
+}

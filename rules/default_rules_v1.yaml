@@ -1,0 +1,304 @@
+# =============================================================================
+# T&S Cotizador — Rule Set
+# Toda regla está versionada. Una cotización guarda rule_set_version + rule_set_hash
+# y NO cambia retroactivamente cuando este archivo cambia (crear v2, no editar v1 en producción).
+#
+# ADVERTENCIA: los valores numéricos de este archivo son PARÁMETROS INICIALES DE EJEMPLO
+# (SAMPLE). Deben calibrarse con datos reales de T&S antes de usarse en producción.
+# =============================================================================
+rule_set_version: "1.0.0-sample"
+is_sample: true
+description: "Rule set inicial de ejemplo para MVP (calibrar con datos reales)."
+
+money:
+  decimal_places: 2          # redondeo de presentación; cálculo interno en Decimal sin redondeo
+  costing_currency: MXN      # moneda de costeo interno si la moneda de cotización es desconocida
+  fx_policy: protected_fx    # reference_fx | current_fx | protected_fx  (sec. 137-138, editable)
+
+price_recency_days:          # sec. 23 — umbrales configurables (límite superior inclusivo)
+  fresh: 30
+  acceptable: 90
+  stale: 180                 # > stale -> obsolete
+
+material:
+  density_kg_m3:             # derivado por grado
+    "AISI 304": 7930
+    "AISI 304L": 7930
+    "AISI 316": 7980
+    "AISI 316L": 7980
+  defaults:                  # se aplican como 'defaulted' con rule_ref visible
+    process_scrap_pct: 5
+    sheet_utilization_pct: { sheet: 75, plate: 75, tube: 90, sanitary_tube: 90, pipe: 90, round_bar: 92, flat_bar: 90, angle: 90, channel: 90, square_tube: 90, rectangular_tube: 90, wire: 95, other: 80 }
+    remnant_credit_pct: 0
+  grade_aliases:             # normalización; raw_value se conserva siempre
+    "AISI 304":  ["304", "SS304", "AISI304", "AISI 304", "SS 304", "T-304", "A240 304", "1.4301"]
+    "AISI 304L": ["304L", "SS304L", "AISI304L", "AISI 304L", "1.4307"]
+    "AISI 316":  ["316", "SS316", "AISI316", "AISI 316", "1.4401"]
+    "AISI 316L": ["316L", "SS316L", "AISI316L", "AISI 316L", "1.4404"]
+
+laser:
+  rate_key: laser_cutting
+  setup_time_hr: 0.25        # una vez por pedido
+  loading_time_hr: 0.05      # por pieza
+  handling_time_hr: 0.03     # por pieza
+  pierce_time_s: 1.5
+  # velocidad de corte mm/min por espesor (límite superior inclusivo, mm)
+  speed_mm_min:
+    - { max_thickness: 1.0, speed: 9000 }
+    - { max_thickness: 2.0, speed: 6000 }
+    - { max_thickness: 3.0, speed: 3500 }
+    - { max_thickness: 6.0, speed: 1500 }
+    - { max_thickness: 10.0, speed: 700 }
+    - { max_thickness: 20.0, speed: 250 }
+  material_factor: { "AISI 304": 1.0, "AISI 304L": 1.0, "AISI 316": 1.05, "AISI 316L": 1.05 }
+
+bending:
+  rate_key: bending
+  setup_time_hr: 0.30        # por setup
+  tool_change_hr: 0.15
+  time_per_bend_hr: 0.012
+  handling_time_hr: 0.02
+  thickness_factor:
+    - { max_thickness: 1.5, factor: 1.0 }
+    - { max_thickness: 3.0, factor: 1.15 }
+    - { max_thickness: 6.0, factor: 1.4 }
+    - { max_thickness: 99, factor: 1.8 }
+  size_factor:               # por dimensión mayor del bounding box (mm)
+    - { max_dim: 300, factor: 1.0 }
+    - { max_dim: 1000, factor: 1.2 }
+    - { max_dim: 2000, factor: 1.6 }
+    - { max_dim: 99999, factor: 2.2 }
+  handling_complexity_factor: { low: 0.9, medium: 1.0, high: 1.3 }
+
+rolling:
+  rate_key: rolling
+  setup_time_hr: 0.5
+  time_per_m_hr: 0.15
+
+welding:
+  rate_key: welding
+  productivity_m_per_hr: { GTAW: 1.2, GMAW: 3.0, other: 1.0 }   # metros de cordón por hora (base)
+  side_multiplier: { one_side: 1, both_sides: 2 }               # unknown -> NO se costea (Regla 3)
+  material_factor: { "AISI 304": 1.0, "AISI 304L": 1.0, "AISI 316": 1.05, "AISI 316L": 1.05 }
+  thickness_factor:
+    - { max_thickness: 1.0, factor: 1.3 }    # lámina delgada: distorsión
+    - { max_thickness: 3.0, factor: 1.0 }
+    - { max_thickness: 6.0, factor: 1.3 }
+    - { max_thickness: 99, factor: 1.8 }
+  joint_factor: { butt: 1.1, fillet: 1.0, lap: 0.9, corner: 1.0, other: 1.1 }
+  accessibility_factor: { easy: 1.0, medium: 1.2, difficult: 1.5, very_difficult: 2.0 }
+  sanitary_factor: { "true": 1.35, "false": 1.0 }
+  purge_factor: { "true": 1.25, "false": 1.0 }
+  penetration_factor: { full: 1.3, partial: 1.0 }
+  continuity_factor: { continuous: 1.0, intermittent: 1.15 }   # longitud = cordón real depositado
+  position_factor: { flat: 1.0, horizontal: 1.1, vertical: 1.3, overhead: 1.6 }
+  small_part:
+    max_dim_mm: 150
+    factor: 1.2
+  consumption_per_m:         # por metro de cordón depositado (por lado)
+    argon_l: 15
+    filler_kg: 0.02
+    tungsten_ea: 0.02
+  purge_argon_l_per_m: 20
+  consumable_keys: { argon_l: argon, filler_kg: filler_rod, tungsten_ea: tungsten }
+
+polishing:
+  rate_key: surface_polishing
+  # m2 por hora por acabado final (por lado)
+  rate_m2_per_hr:
+    "#3": 2.0
+    "#4": 1.5
+    "#6": 1.0
+    "#8": 0.3
+    "Ra<=1.2": 0.8
+    "Ra<=0.8": 0.5
+    "Ra<=0.6": 0.35
+    "Ra<=0.4": 0.2
+  geometry_factor: { flat_surface: 1.0, bent_surface: 1.2, tube: 1.4, inside_corner: 2.0, outside_corner: 1.3, small_cavity: 2.5, large_open_surface: 0.9, complex_assembly: 1.8 }
+  accessibility_factor: { easy: 1.0, medium: 1.2, difficult: 1.6, very_difficult: 2.2 }
+  side_multiplier: { one_side: 1, both_sides: 2 }
+  consumables_pct_of_labor: 12   # abrasivos, compuesto (MVP: porcentaje; regla visible)
+
+weld_finishing:
+  rate_key: weld_finishing
+  rate_m_per_hr: { weld_grinding: 3.0, weld_blending: 1.5, flush: 1.0 }
+  accessibility_factor: { easy: 1.0, medium: 1.25, difficult: 1.6, very_difficult: 2.2 }
+  side_multiplier: { one_side: 1, both_sides: 2 }
+  ra_factor:                 # requisito Ra en µm (límite superior inclusivo)
+    - { max_ra: 0.4, factor: 2.0 }
+    - { max_ra: 0.8, factor: 1.5 }
+    - { max_ra: 1.2, factor: 1.2 }
+    - { max_ra: 99, factor: 1.0 }
+  consumables_pct_of_labor: 15
+
+machining:
+  rate_keys: { cnc_lathe: cnc_lathe, cnc_mill: cnc_mill, manual_lathe: manual_lathe, manual_mill: manual_mill, drill_press: drill_press }
+  tolerance_factor:          # por tolerancia más cerrada del componente (± mm, límite inferior exclusivo)
+    - { min_tol: 0.3, factor: 1.0, category: standard }
+    - { min_tol: 0.1, factor: 1.15, category: moderate }
+    - { min_tol: 0.05, factor: 1.35, category: tight }
+    - { min_tol: 0.0, factor: 1.6, category: very_tight }
+
+generic_process_rate_keys:   # proceso -> rate_key en Cost Master
+  plasma_cutting: plasma_cutting
+  waterjet: waterjet
+  saw_cutting: saw_cutting
+  manual_cutting: general_labor
+  drilling: drill_press
+  turning: cnc_lathe
+  milling: cnc_mill
+  cnc_machining: cnc_mill
+  threading: cnc_lathe
+  tapping: general_labor
+  grinding: weld_finishing
+  passivation: passivation
+  electropolishing: electropolishing
+  assembly: general_labor
+  inspection: inspection
+  cleaning: general_labor
+  packaging_labor: general_labor
+
+outsourcing:
+  markup_pct: 10             # política de markup sobre servicio subcontratado
+
+packaging:
+  default_clearance_mm: 50
+  crate_cost_key: wood_crate_m3       # costo por m3 de caja
+  pallet_cost_key: pallet
+  cardboard_cost_key: cardboard_box
+
+engineering:
+  rate_key: engineering
+
+minimum_charges:             # por categoría, por pedido (además de minimum_charge en Cost Master)
+  laser_cutting: 0
+  machining: 0
+  surface_polishing: 0
+  outsourcing: 0
+
+risk:
+  contingency_mode: per_process      # global | per_process  (sec. 55-56)
+  levels:                            # score 0-100 -> nivel (límite superior inclusivo)
+    - { level: VERY_LOW, max_score: 15 }
+    - { level: LOW, max_score: 30 }
+    - { level: MEDIUM, max_score: 50 }
+    - { level: HIGH, max_score: 70 }
+    - { level: VERY_HIGH, max_score: 100 }
+  contingency_bands_pct:             # global: interpolación lineal dentro de la banda
+    VERY_LOW: [2, 3]
+    LOW: [4, 6]
+    MEDIUM: [7, 10]
+    HIGH: [12, 18]
+    VERY_HIGH: [20, 30]
+  per_process_base_pct:              # per_process: base × multiplicador del nivel de riesgo de fabricación
+    material: 3
+    buy_component: 3
+    laser_cutting: 5
+    bending: 8
+    rolling: 10
+    welding: 15
+    welding_consumables: 10
+    surface_polishing: 20
+    weld_finishing: 20
+    machining: 8
+    generic_process: 10
+    outsourcing: 8
+    quality: 5
+    packaging: 5
+    engineering: 15
+    fixture: 10
+    logistics: 10
+  per_process_level_multiplier: { VERY_LOW: 0.5, LOW: 0.75, MEDIUM: 1.0, HIGH: 1.3, VERY_HIGH: 1.6 }
+  category_weights:                  # para overall_risk
+    interpretation: 0.30
+    manufacturing: 0.30
+    cost_data: 0.20
+    commercial: 0.10
+    delivery: 0.10
+  # factores: puntos (0-100) que suma cada factor activado × severidad (0-1)
+  factors:
+    interpretation:
+      missing_dimensions: 25
+      ambiguous_welds: 25
+      missing_material: 35
+      missing_finish: 15
+      conflicts: 30
+      low_ai_confidence: 15
+      poor_drawing_quality: 15
+      missing_pages: 30
+      unreadable_notes: 10
+      multiple_revisions: 10
+      unclear_units: 20
+      unclear_quantity: 25
+    manufacturing:
+      first_time_build: 15
+      tight_tolerance: 15
+      high_weld_density: 15
+      sanitary_requirement: 10
+      manual_finishing: 15
+      difficult_access: 10
+      small_precision_part: 10
+      custom_fixture: 10
+      unknown_process_time: 25
+      large_part: 10
+    cost_data:
+      old_material_price: 25
+      parametric_cost_only: 25
+      estimated_machine_rate: 15
+      missing_cost: 35
+      foreign_currency: 10
+      unknown_consumables: 10
+    commercial:
+      long_validity_period: 20
+      export: 15
+      imported_component: 15
+      freight_uncertainty: 20
+      small_quantity: 10
+      expedite: 20
+      foreign_currency_exposure: 15
+    delivery:
+      expedite: 35
+      long_supplier_lead: 25
+      first_time_build: 20
+  thresholds:
+    low_ai_confidence: 0.7
+    high_weld_density_mm_per_kg: 400
+    small_precision_part_max_dim_mm: 100
+    large_part_min_dim_mm: 2000
+    long_validity_days: 30
+    small_quantity_max: 2
+    long_supplier_lead_days: 30
+  rework:                            # contingencia de retrabajo separada (sec. 143)
+    tight_tolerance_pct: 4           # sobre maquinado
+    complex_welding_pct: 5           # sobre soldadura si hay full penetration o sanitary
+    high_cosmetic_pct: 6             # sobre pulido si acabado #8 o Ra<=0.6
+
+cei:
+  weights:
+    interpretation_quality: 0.25
+    cost_source_quality: 0.25
+    historical_similarity: 0.10
+    process_confidence: 0.15
+    missing_information: 0.15
+    manufacturing_novelty: 0.10
+  level_score: { A: 100, B: 85, C: 65, D: 40, E: 0 }
+  recency_penalty: { fresh: 0, acceptable: 5, stale: 20, obsolete: 40 }
+  historical_similarity_default: 50  # sin histórico: neutro, marcado como no disponible
+  bands:
+    - { min: 85, label: AUTOQUOTE_CANDIDATE }
+    - { min: 70, label: REVIEW_ALERTS_ONLY }
+    - { min: 50, label: ENGINEERING_REVIEW }
+    - { min: 0, label: MANUAL_ESTIMATE_RECOMMENDED }
+
+commercial:
+  manufacturing_overhead_pct: 12     # sobre costo ajustado por riesgo
+  administrative_overhead_pct: 8
+  commercial_cost_pct: 3             # comisiones / gastos de venta, sobre costo
+  default_margin_pct: 30
+  rounding: { mode: nearest, step: 10 }   # nearest 1|5|10|50|100 o mode: none
+  rush_premium_pct: { normal: 0, urgent: 10, expedite: 20 }
+  stop_conditions:
+    critical_categories: [material, buy_component, welding, machining, surface_polishing, weld_finishing, outsourcing]
+  approval_gates:
+    - { metric: cei, op: lt, value: 70, requires: engineering_approval }
+    - { metric: overall_risk_level, op: in, value: [HIGH, VERY_HIGH], requires: manager_approval }

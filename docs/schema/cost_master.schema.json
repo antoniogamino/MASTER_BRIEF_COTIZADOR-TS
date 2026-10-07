@@ -1,0 +1,640 @@
+{
+  "$defs": {
+    "FxRate": {
+      "additionalProperties": false,
+      "description": "Tipo de cambio: 1 ``base`` = rate ``quote``. Ej: base=USD, quote=MXN, current=18.40.",
+      "properties": {
+        "base": {
+          "title": "Base",
+          "type": "string"
+        },
+        "quote": {
+          "title": "Quote",
+          "type": "string"
+        },
+        "reference_fx": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Reference Fx"
+        },
+        "current_fx": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Current Fx"
+        },
+        "protected_fx": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Protected Fx"
+        },
+        "fx_date": {
+          "format": "date",
+          "title": "Fx Date",
+          "type": "string"
+        },
+        "fx_source": {
+          "title": "Fx Source",
+          "type": "string"
+        },
+        "is_sample": {
+          "default": false,
+          "title": "Is Sample",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "base",
+        "quote",
+        "reference_fx",
+        "current_fx",
+        "protected_fx",
+        "fx_date",
+        "fx_source"
+      ],
+      "title": "FxRate",
+      "type": "object"
+    },
+    "LaborRate": {
+      "additionalProperties": false,
+      "properties": {
+        "labor_key": {
+          "title": "Labor Key",
+          "type": "string"
+        },
+        "salary_cost": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Salary Cost"
+        },
+        "benefits": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "default": "0",
+          "title": "Benefits"
+        },
+        "burden": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "default": "0",
+          "title": "Burden"
+        },
+        "indirect": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "default": "0",
+          "title": "Indirect"
+        },
+        "productive_hours_per_month": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Productive Hours Per Month"
+        },
+        "currency": {
+          "title": "Currency",
+          "type": "string"
+        },
+        "is_sample": {
+          "default": false,
+          "title": "Is Sample",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "labor_key",
+        "salary_cost",
+        "productive_hours_per_month",
+        "currency"
+      ],
+      "title": "LaborRate",
+      "type": "object"
+    },
+    "MaterialPrice": {
+      "additionalProperties": false,
+      "properties": {
+        "price_id": {
+          "title": "Price Id",
+          "type": "string"
+        },
+        "grade": {
+          "title": "Grade",
+          "type": "string"
+        },
+        "grade_raw": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Grade Raw"
+        },
+        "form": {
+          "title": "Form",
+          "type": "string"
+        },
+        "thickness_min_mm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thickness Min Mm"
+        },
+        "thickness_max_mm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thickness Max Mm"
+        },
+        "price_per_kg": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Price Per Kg"
+        },
+        "currency": {
+          "title": "Currency",
+          "type": "string"
+        },
+        "price_date": {
+          "format": "date",
+          "title": "Price Date",
+          "type": "string"
+        },
+        "supplier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supplier"
+        },
+        "source_level": {
+          "$ref": "#/$defs/PriceLevel"
+        },
+        "source_type": {
+          "title": "Source Type",
+          "type": "string"
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reference"
+        },
+        "adjustment_factor": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "default": "1",
+          "title": "Adjustment Factor"
+        },
+        "possible_outlier": {
+          "default": false,
+          "title": "Possible Outlier",
+          "type": "boolean"
+        },
+        "is_sample": {
+          "default": false,
+          "title": "Is Sample",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "price_id",
+        "grade",
+        "form",
+        "price_per_kg",
+        "currency",
+        "price_date",
+        "source_level",
+        "source_type"
+      ],
+      "title": "MaterialPrice",
+      "type": "object"
+    },
+    "PriceLevel": {
+      "description": "Jerarquía obligatoria de fuente de precio (sec. 22). A es la mejor.",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "title": "PriceLevel",
+      "type": "string"
+    },
+    "ProcessRate": {
+      "additionalProperties": false,
+      "description": "Tarifa horaria por proceso / máquina (incluye mano de obra cargada si así se define).",
+      "properties": {
+        "rate_key": {
+          "title": "Rate Key",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "hourly_rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Hourly Rate"
+        },
+        "currency": {
+          "title": "Currency",
+          "type": "string"
+        },
+        "rate_type": {
+          "default": "machine_plus_labor",
+          "enum": [
+            "machine_plus_labor",
+            "labor_only",
+            "machine_only"
+          ],
+          "title": "Rate Type",
+          "type": "string"
+        },
+        "labor_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Labor Key"
+        },
+        "minimum_charge": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Minimum Charge"
+        },
+        "effective_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective Date"
+        },
+        "estimated": {
+          "default": false,
+          "title": "Estimated",
+          "type": "boolean"
+        },
+        "is_sample": {
+          "default": false,
+          "title": "Is Sample",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "rate_key",
+        "hourly_rate",
+        "currency"
+      ],
+      "title": "ProcessRate",
+      "type": "object"
+    },
+    "RiskParameterOverride": {
+      "additionalProperties": false,
+      "properties": {
+        "factor_key": {
+          "title": "Factor Key",
+          "type": "string"
+        },
+        "weight": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Weight"
+        }
+      },
+      "required": [
+        "factor_key",
+        "weight"
+      ],
+      "title": "RiskParameterOverride",
+      "type": "object"
+    },
+    "SimpleCostItem": {
+      "additionalProperties": false,
+      "description": "Consumibles, empaque, calidad y logística comparten esta forma.",
+      "properties": {
+        "item_key": {
+          "title": "Item Key",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "unit_cost": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Unit Cost"
+        },
+        "currency": {
+          "title": "Currency",
+          "type": "string"
+        },
+        "price_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Price Date"
+        },
+        "supplier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supplier"
+        },
+        "is_sample": {
+          "default": false,
+          "title": "Is Sample",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "item_key",
+        "unit",
+        "unit_cost",
+        "currency"
+      ],
+      "title": "SimpleCostItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "title": "Version",
+      "type": "string"
+    },
+    "imported_at": {
+      "format": "date-time",
+      "title": "Imported At",
+      "type": "string"
+    },
+    "source_filename": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Filename"
+    },
+    "is_sample": {
+      "default": false,
+      "title": "Is Sample",
+      "type": "boolean"
+    },
+    "materials": {
+      "items": {
+        "$ref": "#/$defs/MaterialPrice"
+      },
+      "title": "Materials",
+      "type": "array"
+    },
+    "process_rates": {
+      "items": {
+        "$ref": "#/$defs/ProcessRate"
+      },
+      "title": "Process Rates",
+      "type": "array"
+    },
+    "labor": {
+      "items": {
+        "$ref": "#/$defs/LaborRate"
+      },
+      "title": "Labor",
+      "type": "array"
+    },
+    "consumables": {
+      "items": {
+        "$ref": "#/$defs/SimpleCostItem"
+      },
+      "title": "Consumables",
+      "type": "array"
+    },
+    "packaging": {
+      "items": {
+        "$ref": "#/$defs/SimpleCostItem"
+      },
+      "title": "Packaging",
+      "type": "array"
+    },
+    "quality": {
+      "items": {
+        "$ref": "#/$defs/SimpleCostItem"
+      },
+      "title": "Quality",
+      "type": "array"
+    },
+    "logistics": {
+      "items": {
+        "$ref": "#/$defs/SimpleCostItem"
+      },
+      "title": "Logistics",
+      "type": "array"
+    },
+    "fx": {
+      "items": {
+        "$ref": "#/$defs/FxRate"
+      },
+      "title": "Fx",
+      "type": "array"
+    },
+    "risk_parameters": {
+      "items": {
+        "$ref": "#/$defs/RiskParameterOverride"
+      },
+      "title": "Risk Parameters",
+      "type": "array"
+    }
+  },
+  "required": [
+    "version",
+    "imported_at"
+  ],
+  "title": "CostMaster",
+  "type": "object",
+  "$id": "ts-quoter/cost_master/mcj/1.0.0"
+}

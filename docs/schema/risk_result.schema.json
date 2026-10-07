@@ -1,0 +1,360 @@
+{
+  "$defs": {
+    "CEIComponent": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Score"
+        },
+        "weight": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Weight"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "score",
+        "weight",
+        "explanation"
+      ],
+      "title": "CEIComponent",
+      "type": "object"
+    },
+    "CategoryRisk": {
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Score"
+        },
+        "level": {
+          "title": "Level",
+          "type": "string"
+        },
+        "drivers": {
+          "items": {
+            "$ref": "#/$defs/RiskDriver"
+          },
+          "title": "Drivers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "score",
+        "level",
+        "drivers"
+      ],
+      "title": "CategoryRisk",
+      "type": "object"
+    },
+    "ContingencyLine": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "base_amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Base Amount"
+        },
+        "pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Pct"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Amount"
+        },
+        "basis": {
+          "title": "Basis",
+          "type": "string"
+        }
+      },
+      "required": [
+        "category",
+        "base_amount",
+        "pct",
+        "amount",
+        "basis"
+      ],
+      "title": "ContingencyLine",
+      "type": "object"
+    },
+    "RiskDriver": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "factor": {
+          "title": "Factor",
+          "type": "string"
+        },
+        "weight": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Weight"
+        },
+        "severity": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Severity"
+        },
+        "points": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Points"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "category",
+        "factor",
+        "weight",
+        "severity",
+        "points",
+        "evidence"
+      ],
+      "title": "RiskDriver",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "risk_model_version": {
+      "title": "Risk Model Version",
+      "type": "string"
+    },
+    "rule_set_ref": {
+      "title": "Rule Set Ref",
+      "type": "string"
+    },
+    "interpretation_risk": {
+      "$ref": "#/$defs/CategoryRisk"
+    },
+    "manufacturing_risk": {
+      "$ref": "#/$defs/CategoryRisk"
+    },
+    "cost_data_risk": {
+      "$ref": "#/$defs/CategoryRisk"
+    },
+    "commercial_risk": {
+      "$ref": "#/$defs/CategoryRisk"
+    },
+    "delivery_risk": {
+      "$ref": "#/$defs/CategoryRisk"
+    },
+    "overall_score": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Overall Score"
+    },
+    "overall_risk": {
+      "title": "Overall Risk",
+      "type": "string"
+    },
+    "contingency_mode": {
+      "title": "Contingency Mode",
+      "type": "string"
+    },
+    "contingency_lines": {
+      "items": {
+        "$ref": "#/$defs/ContingencyLine"
+      },
+      "title": "Contingency Lines",
+      "type": "array"
+    },
+    "rework_lines": {
+      "items": {
+        "$ref": "#/$defs/ContingencyLine"
+      },
+      "title": "Rework Lines",
+      "type": "array"
+    },
+    "contingency_total": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Contingency Total"
+    },
+    "rework_total": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Rework Total"
+    },
+    "contingency_pct_effective": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Contingency Pct Effective"
+    },
+    "cei": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Cei"
+    },
+    "cei_classification": {
+      "title": "Cei Classification",
+      "type": "string"
+    },
+    "cei_components": {
+      "items": {
+        "$ref": "#/$defs/CEIComponent"
+      },
+      "title": "Cei Components",
+      "type": "array"
+    },
+    "quantity_basis": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Quantity Basis"
+    }
+  },
+  "required": [
+    "risk_model_version",
+    "rule_set_ref",
+    "interpretation_risk",
+    "manufacturing_risk",
+    "cost_data_risk",
+    "commercial_risk",
+    "delivery_risk",
+    "overall_score",
+    "overall_risk",
+    "contingency_mode",
+    "contingency_lines",
+    "rework_lines",
+    "contingency_total",
+    "rework_total",
+    "contingency_pct_effective",
+    "cei",
+    "cei_classification",
+    "cei_components",
+    "quantity_basis"
+  ],
+  "title": "RiskResult",
+  "type": "object",
+  "$id": "ts-quoter/risk_result/mcj/1.0.0"
+}

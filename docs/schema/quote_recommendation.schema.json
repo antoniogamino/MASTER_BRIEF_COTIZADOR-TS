@@ -1,0 +1,431 @@
+{
+  "$defs": {
+    "PriceStep": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Amount"
+        },
+        "formula": {
+          "title": "Formula",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "amount",
+        "formula"
+      ],
+      "title": "PriceStep",
+      "type": "object"
+    },
+    "QuantityBreak": {
+      "additionalProperties": false,
+      "properties": {
+        "quantity": {
+          "title": "Quantity",
+          "type": "integer"
+        },
+        "base_cost": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Base Cost"
+        },
+        "contingency": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Contingency"
+        },
+        "total_internal_cost": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Total Internal Cost"
+        },
+        "suggested_price_total": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Suggested Price Total"
+        },
+        "suggested_unit_price": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Suggested Unit Price"
+        },
+        "rounded_unit_price": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Rounded Unit Price"
+        }
+      },
+      "required": [
+        "quantity",
+        "base_cost",
+        "contingency",
+        "total_internal_cost",
+        "suggested_price_total",
+        "suggested_unit_price",
+        "rounded_unit_price"
+      ],
+      "title": "QuantityBreak",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "status": {
+      "enum": [
+        "RECOMMENDED",
+        "BLOCKED",
+        "PROCEED_WITH_ASSUMPTIONS",
+        "PARTIAL_COST"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "autoquote_class": {
+      "title": "Autoquote Class",
+      "type": "string"
+    },
+    "currency": {
+      "title": "Currency",
+      "type": "string"
+    },
+    "quantity": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Quantity"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/PriceStep"
+      },
+      "title": "Steps",
+      "type": "array"
+    },
+    "base_manufacturing_cost": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Base Manufacturing Cost"
+    },
+    "risk_contingency": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Risk Contingency"
+    },
+    "rework_contingency": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Rework Contingency"
+    },
+    "adjusted_manufacturing_cost": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Adjusted Manufacturing Cost"
+    },
+    "manufacturing_overhead": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Manufacturing Overhead"
+    },
+    "administrative_overhead": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Administrative Overhead"
+    },
+    "commercial_costs": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Commercial Costs"
+    },
+    "rush_premium": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Rush Premium"
+    },
+    "total_internal_cost": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Total Internal Cost"
+    },
+    "target_margin_pct": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Target Margin Pct"
+    },
+    "markup_pct_informative": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Markup Pct Informative"
+    },
+    "calculated_price": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Calculated Price"
+    },
+    "rounded_price": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        }
+      ],
+      "title": "Rounded Price"
+    },
+    "approved_price": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Approved Price"
+    },
+    "unit_price_rounded": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Unit Price Rounded"
+    },
+    "quantity_breaks": {
+      "items": {
+        "$ref": "#/$defs/QuantityBreak"
+      },
+      "title": "Quantity Breaks",
+      "type": "array"
+    },
+    "stop_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Stop Reasons",
+      "type": "array"
+    },
+    "required_approvals": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Approvals",
+      "type": "array"
+    },
+    "quote_notes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Quote Notes",
+      "type": "array"
+    },
+    "technical_questions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Technical Questions",
+      "type": "array"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "extra": {
+      "additionalProperties": true,
+      "title": "Extra",
+      "type": "object"
+    }
+  },
+  "required": [
+    "status",
+    "autoquote_class",
+    "currency",
+    "quantity",
+    "steps",
+    "base_manufacturing_cost",
+    "risk_contingency",
+    "rework_contingency",
+    "adjusted_manufacturing_cost",
+    "manufacturing_overhead",
+    "administrative_overhead",
+    "commercial_costs",
+    "rush_premium",
+    "total_internal_cost",
+    "target_margin_pct",
+    "markup_pct_informative",
+    "calculated_price",
+    "rounded_price",
+    "quantity_breaks",
+    "stop_reasons",
+    "required_approvals",
+    "quote_notes",
+    "technical_questions",
+    "warnings"
+  ],
+  "title": "QuoteRecommendation",
+  "type": "object",
+  "$id": "ts-quoter/quote_recommendation/mcj/1.0.0"
+}
